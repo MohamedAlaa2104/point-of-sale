@@ -1,0 +1,41 @@
+.row {
+    width: $grid-width;
+    margin: 0 auto;
+    &:not(:last-child){
+        margin-bottom: $gutter-vertical;
+        @include respond(tab-land){
+            margin-bottom: $gutter-vertical-small;
+        }
+    }
+    @include clearfix;
+    [class^="col-"]{
+        float: left;
+        &:not(:last-child){
+            margin-right: $gutter-horizontal;
+            @include respond(tab-land){
+                margin-right: 0;
+                margin-bottom: $gutter-vertical-small;
+            }
+        }
+
+        @include respond(tab-land){
+            width: 100% !important;
+            padding: 0 3rem;
+        }
+    }
+    @include respond(tab-land){
+        max-width: 50rem ;
+    }
+    @include respond(phone){
+        width: auto;
+    }
+    & .col-1-of-2{
+        width: calc((100% - #{$gutter-horizontal}) / 2);
+
+    }
+
+    & .col-1-of-3 {
+        width: calc((100% - 2 * #{$gutter-horizontal}) / 3);
+    }
+}
+

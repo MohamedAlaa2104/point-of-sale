@@ -1,0 +1,82 @@
+.footer {
+    margin-top: 9rem;
+    padding: 3rem 0;
+    background-image: linear-gradient(to right bottom, $primary-color, $primary-color-light);
+    @include respond(tab-port){
+        text-align: center;
+    }
+
+    &__logo-box {
+        text-align: center;
+        margin-bottom: 5rem;
+        @include respond(tab-port){
+            margin-bottom: 2rem;
+        }
+    }
+    &__logo-img {
+        width: 7%;
+    }
+
+    &__navigation {
+        text-align: center;
+    }
+    &__list {
+        list-style: none;
+        float: left;
+        @include respond(tab-port){
+            float: none;
+        }
+    }
+    &__item{
+        display: inline-block;
+        &:not(:last-child) {
+            margin-right: 1.5rem;
+            @include respond(tab-port){
+                margin-right: 1rem;
+            }
+        }
+    }
+    &__link {
+        text-decoration: none;
+        transition: .3s;
+        &:link,
+        &:visited{
+            color: $color-white;
+            font-size: 1.4rem;
+            padding: 1rem;
+            text-transform: uppercase;
+            display: inline-block;
+            @include respond(tab-port){
+                font-size: 1.1rem;
+            }
+        }
+
+        &:hover,
+        &:active {
+            background-color: $color-white;
+            color: $primary-color;
+            font-weight: 700;
+            box-shadow: 0 1rem 2rem rgba($color-black, .4);
+            transform: rotate(5deg) scale(1.3);
+        }
+    }
+    &__text {
+        font-size: 1.4rem;
+        color: $color-white;
+        float: right;
+        @include respond(tab-port){
+            float: none;
+            font-size: 1.1rem;
+        }
+    }
+
+    &__copy-right{
+        text-align: center;
+        font-size: 1.3rem;
+        color: $color-white;
+        @include respond(tab-port){
+            float: none;
+            font-size: 1rem;
+        }
+    }
+}
