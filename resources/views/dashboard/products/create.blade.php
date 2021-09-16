@@ -39,57 +39,43 @@
                         <div class=" mg-b-15">
                             <p class="mg-b-10">@lang('dashboard.category')</p>
                             <select name="category_id" class="form-control " >
-                                @foreach($categories as $id=>$name)
-                                    <option value="{{$id}}">
-                                        {{$name}}
+                                <option value="">@lang('dashboard.select_category')</option>
+                                @foreach($categories as $category)
+                                    <option value="{{$category->id}}">
+                                        {{$category->translate(app()->getLocale())->name}}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
+
+                        @foreach(config('translatable.locales') as $locale)
                         <div class="form-group">
-                            <p class="mg-b-10">@lang('dashboard.name_en')</p>
-                            <input type="text" name="name_en" value="{{old('name_en')}}" class="form-control" id="inputName" required>
-                        </div>
-                        <div class="form-group">
-                            <p class="mg-b-10">@lang('dashboard.name_ar')</p>
-                            <input type="text" name="name_ar" value="{{old('name_ar')}}" class="form-control" id="inputName" required>
-                        </div>
-                        <div class="form-group">
-                            <p class="mg-b-10">@lang('dashboard.small_description_en')</p>
-                            <textarea type="text" name="small_description_en" class="form-control" id="inputName" required>{{old('small_description')}}</textarea>
-                        </div>
-                        <div class="form-group">
-                            <p class="mg-b-10">@lang('dashboard.small_description_ar')</p>
-                            <textarea type="text" name="small_description_ar" class="form-control" id="inputName" required>{{old('small_description')}}</textarea>
+                            <p class="mg-b-10">@lang('dashboard.' . $locale . '.name')</p>
+                            <input type="text" name="{{$locale}}[name]" value="{{old($locale . '.name')}}" class="form-control" id="inputName" required>
                         </div>
 
                         <div class="form-group">
-                            <p class="mg-b-10">@lang('dashboard.description_en')</p>
-                        <textarea id="summernote" name="desc_en"></textarea>
+                            <p class="mg-b-10">@lang('dashboard.' . $locale . '.description')</p>
+                        <textarea id="summernote_{{$locale}}" name="{{$locale}}[description]"></textarea>
                         <script>
-                            $('#summernote').summernote({
+                            $('#summernote_{{$locale}}').summernote({
                                 tabsize: 2,
                                 height: 250
                             });
                         </script>
                         </div>
+                        @endforeach
+
+
 
                         <div class="form-group">
-                            <p class="mg-b-10">@lang('dashboard.description_ar')</p>
-                            <textarea id="summernote1" name="desc_ar"></textarea>
-                            <script>
-                                $('#summernote1').summernote({
-                                    tabsize: 2,
-                                    height: 250
-                                });
-                            </script>
+                            <p class="mg-b-10">@lang('dashboard.sell_price')</p>
+                            <input type="number" name="sell_price" value="{{old('sell_price')}}" class="form-control" id="inputName" required>
                         </div>
 
-
-
                         <div class="form-group">
-                            <p class="mg-b-10">@lang('dashboard.price')</p>
-                            <input type="number" name="price" value="{{old('price')}}" class="form-control" id="inputName" required>
+                            <p class="mg-b-10">@lang('dashboard.buy_price')</p>
+                            <input type="number" name="buy_price" value="{{old('buy_price')}}" class="form-control" id="inputName" required>
                         </div>
 
                         <div class="main-toggle-group-demo mg-t-20 mg-b-10">
@@ -110,7 +96,6 @@
                             </div>
                         </div>
                         <input type="hidden" name="active" value="1">
-                        <input type="hidden" name="featured" value="0">
                     </form>
                 </div>
             </div>

@@ -135,8 +135,8 @@
             ajax: '{!! route('dashboard.products-table') !!}',
             columns: [
                 {data: 'DT_RowIndex', name:'DT_RowIndex'},
-                {data: 'name_{{LaravelLocalization::getCurrentLocale()}}', name:'name_{{LaravelLocalization::getCurrentLocale()}}'},
-                {data: 'price', name:'price'},
+                {data: 'translation.name', name:'translation.name'},
+                {data: 'sell_price', name:'sell_price'},
                 {data: 'active', name:'active'},
                 {data: 'img', name:'img'},
                 {data: 'action', name:'action'},

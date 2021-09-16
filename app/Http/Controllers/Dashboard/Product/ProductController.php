@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use DataTables;
+use Illuminate\Validation\Rule;
 use Image;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -39,8 +40,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
-        return view('dashboard.products.create')->with('categories', Category::pluck('name', 'id'));
+        $categories = Category::get();
+        return view('dashboard.products.create' , compact('categories'));
     }
 
     /**
@@ -52,30 +53,22 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name_en'=>'required|unique:products,name_en',
-            'name_ar'=>'required|unique:products,name_ar',
-            'small_description_en'=>'string',
-            'small_description_ar'=>'string',
-            'desc_ar'=>'string',
-            'desc_en'=>'string',
-            'price'=>'required|integer',
+            'category_id'=>'required',
+            'en.name'=>['required', Rule::unique('product_translations', 'name')],
+            'ar.name'=>['required', Rule::unique('product_translations', 'name')],
+            'en.description'=>'required',
+            'ar.description'=>'required',
+            'sell_price'=>'required|integer',
+            'buy_price'=>'required|integer',
             'mainImg'=>'required|mimes:jpg,png,jpeg,svg,gif|max:10000',
 //            'imgs'=>'required',
 //            'imgs.*' => 'mimes:jpeg,jpg,png,gif|max:10000',
         ]);
 
-        $product = Product::create([
-            'category_id'=>$request->category_id,
-            'name_en'=>$request->name_en,
-            'name_ar'=>$request->name_ar,
-            'small_description_en'=>$request->small_description_en,
-            'small_description_ar'=>$request->small_description_ar,
-            'desc_en'=>$request->desc_en,
-            'desc_ar'=>$request->desc_ar,
-            'price'=>$request->price,
-            'active'=>$request->active,
-            'slug'=>str_replace(' ', '-', $request->name_en),
-        ]);
+        $request['slug'] = str_replace(' ', '-', $request->en['name']);
+
+//        dd($request->all());
+        $product = Product::create($request->all());
 
 //        $logo = Image::make(public_path('img/dress-logo-white.png'))->resize(60,60);
         if ($request->hasFile('mainImg')){
@@ -195,12 +188,9 @@ class ProductController extends Controller
 
     public function productsTable()
     {
-        return DataTables::eloquent(Product::query())
+        return DataTables::eloquent(Product::with('translation'))
             ->addColumn('active', function($row) {
                 return view('dashboard.products.product-switch')->with(['id'=> $row->id, 'status'=>$row->active, 'type'=>'active']);
-            })
-            ->addColumn('featured', function($row) {
-                return view('dashboard.products.product-switch')->with(['id'=> $row->id, 'status'=>$row->featured, 'type'=>'featured']);
             })
             ->addColumn('action', function($row) {
                 return view('dashboard.products.products-datatables')->with('row', $row);

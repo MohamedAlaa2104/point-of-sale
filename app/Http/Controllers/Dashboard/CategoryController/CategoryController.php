@@ -58,8 +58,8 @@ class CategoryController extends Controller
             $agency->addMedia(public_path($name.'.jpg'))->toMediaCollection('main');
         }
 
-
-        return redirect()->route('dashboard.category.index')->with('success', 'You record has been added successfully');
+        session()->flash('done', trans('dashboard.success_add'));
+        return redirect()->route('dashboard.category.index');
     }
 
     /**
@@ -102,7 +102,10 @@ class CategoryController extends Controller
             $img->save($name.'.jpg');
             $category->addMedia(public_path($name.'.jpg'))->toMediaCollection('main');
         }
-        return redirect()->route('dashboard.category.index')->with('success', 'You record has been updated successfully');
+
+        session()->flash('done', trans('dashboard.success_edit'));
+
+        return redirect()->route('dashboard.category.index');
     }
 
     /**
@@ -115,7 +118,10 @@ class CategoryController extends Controller
     {
         $category->clearMediaCollection();
         $category->delete();
-        return back()->with('success', 'Your record has been deleted successfully');
+
+        session()->flash('done', trans('dashboard.success_delete'));
+
+        return redirect()->route('dashboard.category.index');
     }
 
     public function CategoryTable()
