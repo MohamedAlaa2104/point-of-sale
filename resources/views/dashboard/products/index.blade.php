@@ -1,53 +1,5 @@
 @extends('dashboard.layouts.master')
 @section('title', __('dashboard.products'))
-@section('css')
-    <!-- Internal Data table css -->
-    <link href="{{URL::asset('assets/plugins/datatable/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" />
-    <link href="{{URL::asset('assets/plugins/datatable/css/buttons.bootstrap4.min.css')}}" rel="stylesheet">
-    <link href="{{URL::asset('assets/plugins/datatable/css/responsive.bootstrap4.min.css')}}" rel="stylesheet" />
-    <link href="{{URL::asset('assets/plugins/datatable/css/jquery.dataTables.min.css')}}" rel="stylesheet">
-    <link href="{{URL::asset('assets/plugins/datatable/css/responsive.dataTables.min.css')}}" rel="stylesheet">
-    <link href="{{URL::asset('assets/plugins/select2/css/select2.min.css')}}" rel="stylesheet">
-    <!---Internal  Owl Carousel css-->
-    <link href="{{URL::asset('assets/plugins/owl-carousel/owl.carousel.css')}}" rel="stylesheet">
-    <!--- Internal Sweet-Alert css-->
-    <link href="{{URL::asset('assets/plugins/sweet-alert/sweetalert.css')}}" rel="stylesheet">
-    <style>
-        .link-icon-edit:link,
-        .link-icon-edit:visited{
-            text-decoration: none;
-            background: #2BEE2B;
-            padding: 2px 4px;
-            color: #000;
-            border-radius: 5px;
-            font-size: 1.3rem;
-            text-align: center;
-            display: inline-block;
-            margin: 0 10px;
-        }
-        .link-icon-edit:hover{
-            transform: scale(1.2);
-            background: #2ad02a;
-        }
-
-        .link-icon-delete:link,
-        .link-icon-delete:visited{
-            text-decoration: none;
-            background: #e91d1d;
-            padding: 2px 4px;
-            color: #fff;
-            border-radius: 5px;
-            font-size: 1.3rem;
-            text-align: center;
-            display: inline-block;
-            margin: 0 10px;
-        }
-        .link-icon-delete:hover{
-            transform: scale(1.2);
-            background: #D71A1A;
-        }
-    </style>
-@endsection
 @section('page-header')
     <!-- breadcrumb -->
     <div class="breadcrumb-header justify-content-between">
@@ -77,7 +29,10 @@
                             <tr>
                                 <th class="wd-5p border-bottom-0"> # </th>
                                 <th class="wd-15p border-bottom-0"> @lang('dashboard.name') </th>
-                                <th class="wd-15p border-bottom-0">@lang('dashboard.price')</th>
+                                <th class="wd-15p border-bottom-0">@lang('dashboard.sell_price')</th>
+                                <th class="wd-15p border-bottom-0">@lang('dashboard.buy_price')</th>
+                                <th class="wd-15p border-bottom-0">@lang('dashboard.stock')</th>
+                                <th class="wd-15p border-bottom-0">@lang('dashboard.profit') %</th>
                                 <th class="wd-15p border-bottom-0">@lang('dashboard.active')</th>
                                 <th class="wd-15p border-bottom-0">@lang('dashboard.main-photo')</th>
                                 <th class="wd-10p border-bottom-0">@lang('dashboard.action')</th>
@@ -137,6 +92,9 @@
                 {data: 'DT_RowIndex', name:'DT_RowIndex'},
                 {data: 'translation.name', name:'translation.name'},
                 {data: 'sell_price', name:'sell_price'},
+                {data: 'buy_price', name:'buy_price'},
+                {data: 'stock', name:'stock'},
+                {data: 'profit_percent', name:'profit_percent'},
                 {data: 'active', name:'active'},
                 {data: 'img', name:'img'},
                 {data: 'action', name:'action'},
@@ -171,22 +129,14 @@
                             }
                         }
 
-                        swal({
-                            title: "{{__('dashboard.done')}}",
-                            text: "{{__('dashboard.your-request-has-been-applied')}}",
-                            icon: "success",
-                        });
+                        new Noty({
+                            type: 'success',
+                            layout: 'topRight',
+                            text: '{{__('dashboard.your-request-has-been-applied')}}',
+                            timeout:1500,
+                        }).show();
                     });
 
             }
     </script>
-    @if ($success = session()->get('success'))
-        <script>
-            swal({
-            title: "{{__('dashboard.done')}}",
-            text: "{{__('dashboard.your-request-has-been-applied')}}",
-            icon: "success",
-            });
-        </script>
-    @endif
 @endsection

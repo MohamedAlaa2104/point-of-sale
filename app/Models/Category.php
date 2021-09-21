@@ -15,7 +15,7 @@ class Category extends Model implements HasMedia, TranslatableContract
 
     public $translatedAttributes = ['name'];
 
-    protected $fillable = [ 'slug', 'renting_duration'];
+    protected $fillable = [ 'slug'];
 
     public function Products()
     {

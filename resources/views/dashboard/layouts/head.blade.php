@@ -33,4 +33,7 @@
     <link href="{{URL::asset('assets/css-rtl/skin-modes.css')}}" rel="stylesheet">
 @endif
 
+<!--- Internal Sweet-Alert css-->
+<link href="{{URL::asset('assets/plugins/sweet-alert/sweetalert.css')}}" rel="stylesheet">
+
 @yield('css')

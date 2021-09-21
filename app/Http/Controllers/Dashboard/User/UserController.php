@@ -22,7 +22,6 @@ class UserController extends Controller
 
     public function index()
     {
-            session()->flash('done', 'تم اضافة البيانات بنجاح');
         return view('dashboard.users.index');
     }
 

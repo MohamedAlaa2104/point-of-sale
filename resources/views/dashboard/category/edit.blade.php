@@ -32,24 +32,17 @@
                     </div>
                     <form method="POST" action="{{route('dashboard.category.update', $category->id)}}" class="form-horizontal" enctype="multipart/form-data" >
                         @csrf
+
                         @method('PUT')
+
                         @foreach(config('translatable.locales') as $locale )
 
                         <div class="form-group">
                             <p class="mg-b-10">@lang('dashboard.' . $locale . '.name')</p>
                             <input type="text" name="{{$locale}}[name]" value="{{$category->translate($locale)->name}}" class="form-control" id="inputName" required>
                         </div>
-
                         @endforeach
 
-                        <div class=" mg-b-15">
-                            <p class="mg-b-10">@lang('dashboard.renting_duration')</p>
-                            <select name="renting_duration" class="form-control " >
-                                <option {{$category->renting_duration == '0' ? 'selected' : ''}} value="0">@lang('dashboard.day')</option>
-                                <option {{$category->renting_duration == '1' ? 'selected' : ''}} value="1">@lang('dashboard.month')</option>
-                                <option {{$category->renting_duration == '2' ? 'selected' : ''}} value="2">@lang('dashboard.year')</option>
-                            </select>
-                        </div>
                         <div class="mg-b-20">
                             <p class="mg-b-10">@lang('dashboard.main-photo')</p>
                             <div class="row">
@@ -67,6 +60,7 @@
                                 <button type="submit" class="btn btn-success">@lang('dashboard.edit')</button>
                             </div>
                         </div>
+
                     </form>
                 </div>
             </div>

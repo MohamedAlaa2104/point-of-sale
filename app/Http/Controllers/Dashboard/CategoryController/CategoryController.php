@@ -43,7 +43,6 @@ class CategoryController extends Controller
         $request->validate([
             'en.name'=>'required|unique:category_translations,name',
             'ar.name'=>'required',
-            'renting_duration'=>'required',
             'mainImg'=>'required|mimes:jpg,png,jpeg,svg,gif|max:10000',
         ]);
         $request['slug'] = str_replace(' ', '-', $request->en['name']);
@@ -85,7 +84,6 @@ class CategoryController extends Controller
         $request->validate([
             'en.name'=>['required',Rule::unique('category_translations', 'name')->ignore($category->id, 'category_id')],
             'ar.name'=>['required',Rule::unique('category_translations', 'name')->ignore($category->id, 'category_id')],
-            'renting_duration'=>'required',
             'mainImg'=>'mimes:jpg,png,jpeg,svg,gif|max:10000',
         ]);
 
@@ -126,7 +124,7 @@ class CategoryController extends Controller
 
     public function CategoryTable()
     {
-        return DataTables::eloquent(Category::with('translation'))
+        return DataTables::eloquent(Category::with('translation')->withCount('products'))
             ->addColumn('action', function ($row){
                 return view('dashboard.category.agency-datatable', compact('row'));
             })

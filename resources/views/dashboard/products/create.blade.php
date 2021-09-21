@@ -67,6 +67,10 @@
                         @endforeach
 
 
+                        <div class="form-group">
+                            <p class="mg-b-10">@lang('dashboard.buy_price')</p>
+                            <input type="number" name="buy_price" value="{{old('buy_price')}}" class="form-control" id="inputName" required>
+                        </div>
 
                         <div class="form-group">
                             <p class="mg-b-10">@lang('dashboard.sell_price')</p>
@@ -74,8 +78,8 @@
                         </div>
 
                         <div class="form-group">
-                            <p class="mg-b-10">@lang('dashboard.buy_price')</p>
-                            <input type="number" name="buy_price" value="{{old('buy_price')}}" class="form-control" id="inputName" required>
+                            <p class="mg-b-10">@lang('dashboard.stock')</p>
+                            <input type="number" name="stock" value="{{old('stock')}}" class="form-control" id="inputName" required>
                         </div>
 
                         <div class="main-toggle-group-demo mg-t-20 mg-b-10">

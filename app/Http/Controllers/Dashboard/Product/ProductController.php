@@ -67,7 +67,6 @@ class ProductController extends Controller
 
         $request['slug'] = str_replace(' ', '-', $request->en['name']);
 
-//        dd($request->all());
         $product = Product::create($request->all());
 
 //        $logo = Image::make(public_path('img/dress-logo-white.png'))->resize(60,60);
@@ -89,8 +88,9 @@ class ProductController extends Controller
             }
         }
 
+        session()->flash('done', __('dashboard.success_add'));
 
-        return redirect()->route('dashboard.products.index')->with('success', 'The product has been created successfully!');
+        return redirect()->route('dashboard.products.index');
     }
 
     /**
@@ -113,7 +113,7 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         //
-        return view('dashboard.products.edit')->with(['product'=>$product, 'categories'=>Category::pluck('name_'.LaravelLocalization::getCurrentLocale(), 'id')]);
+        return view('dashboard.products.edit')->with(['product'=>$product, 'categories'=>Category::get()]);
     }
 
     /**
@@ -126,29 +126,20 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $request->validate([
-            'name_en'=>'required|unique:products,name_en,'.$product->id,
-            'name_ar'=>'required|unique:products,name_ar,'.$product->id,
-            'small_description_en'=>'string',
-            'small_description_ar'=>'string',
-            'desc_ar'=>'string',
-            'desc_en'=>'string',
-            'price'=>'required|integer',
+            'ar.name'=>['required', Rule::unique('product_translations', 'name')->ignore($product->id , 'product_id')],
+            'en.name'=>['required', Rule::unique('product_translations', 'name')->ignore($product->id , 'product_id')],
+            'ar.description'=>'string',
+            'en.description'=>'string',
+            'buy_price'=>'required|integer',
+            'sell_price'=>'required|integer',
+            'stock'=>'required|integer',
     //            'mainImg'=>'mimes:jpg,png,jpeg,svg,gif|max:10000',
     //            'imgs.*' => 'mimes:jpeg,jpg,png,gif|max:10000',
         ]);
 
-        $product->update([
-            'category_id'=>$request->category_id,
-            'name_en'=>$request->name_en,
-            'name_ar'=>$request->name_ar,
-            'small_description_en'=>$request->small_description_en,
-            'small_description_ar'=>$request->small_description_ar,
-            'desc_en'=>$request->desc_en,
-            'desc_ar'=>$request->desc_ar,
-            'price'=>$request->price,
-            'active'=>$request->active,
-            'slug'=>str_replace(' ', '-', $request->name_en),
-        ]);
+        $request['slug'] = str_replace(' ', '-', $request->name_en);
+
+        $product->update($request->all());
 
         if ($request->hasFile('mainImg')){
             $product->clearMediaCollection('main');
@@ -167,8 +158,8 @@ class ProductController extends Controller
                 $product->addMedia(public_path($name.'.jpg'))->toMediaCollection();
             }
         }
-
-        return redirect()->route('dashboard.products.index')->with('success', 'The product has been updated successfully!');
+        session()->flash('done', trans('dashboard.success_edit'));
+        return redirect()->route('dashboard.products.index');
 
     }
 
@@ -181,8 +172,12 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->clearMediaCollection();
+
         $product->delete();
-        return redirect()->route('dashboard.products.index')->with('success', 'The product has been deleted successfully!');
+
+        session()->flash('done', trans('dashboard.success_delete'));
+
+        return redirect()->route('dashboard.products.index');
 
     }
 

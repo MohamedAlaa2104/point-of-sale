@@ -40,25 +40,19 @@
                         </div>
                         @endforeach
 
-                        <div class=" mg-b-15">
-                            <p class="mg-b-10">@lang('dashboard.renting_duration')</p>
-                            <select name="renting_duration" class="form-control " >
-                                <option value="0">@lang('dashboard.day')</option>
-                                <option value="1">@lang('dashboard.month')</option>
-                                <option value="2">@lang('dashboard.year')</option>
-                            </select>
-                        </div>
                         <div class="mg-b-20">
                             <p class="mg-b-10">@lang('dashboard.main-photo')</p>
                             <div class="col-sm-12 col-md-4">
                                 <input type="file" name="mainImg" class="dropify" data-height="200" />
                             </div>
                         </div>
+
                         <div class="form-group mb-0 mt-3 justify-content-end">
                             <div>
                                 <button type="submit" class="btn btn-success">@lang('dashboard.create')</button>
                             </div>
                         </div>
+
                     </form>
                 </div>
             </div>

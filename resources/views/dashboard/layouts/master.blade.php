@@ -35,5 +35,6 @@
 		@include('dashboard.layouts.footer')
 		@include('dashboard.layouts.footer-scripts')
 		@include('dashboard.partials.success')
+		@include('dashboard.partials.swal')
 	</body>
 </html>

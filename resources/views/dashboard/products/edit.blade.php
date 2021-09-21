@@ -37,59 +37,51 @@
                     <form method="POST" action="{{route('dashboard.products.update', $product->id)}}" class="form-horizontal" enctype="multipart/form-data" >
                         @csrf
                         @method('PUT')
+
                         <div class=" mg-b-15">
                             <p class="mg-b-10">@lang('dashboard.category')</p>
                             <select name="category_id" class="form-control " >
-                                @foreach($categories as $id=>$name)
-                                    <option {{$product->category_id == $id ? 'selected' : ''}} value="{{$id}}">
-                                        {{$name}}
+                                @foreach($categories as $category)
+                                    <option {{$product->category_id == $category->id ? 'selected' : ''}} value="{{$category->id}}">
+                                        {{$category->translate(app()->getLocale())->name}}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
+
+                        @foreach (config('translatable.locales') as $locale)
+
                         <div class="form-group">
-                            <p class="mg-b-10">@lang('dashboard.name_en')</p>
-                            <input type="text" name="name_en" value="{{$product->name_en}}" class="form-control" id="inputName" required>
-                        </div>
-                        <div class="form-group">
-                            <p class="mg-b-10">@lang('dashboard.name_ar')</p>
-                            <input type="text" name="name_ar" value="{{$product->name_ar}}" class="form-control" id="inputName" required>
+                            <p class="mg-b-10">@lang('dashboard.' . $locale . '.name')</p>
+                            <input type="text" name="{{$locale}}[name]" value="{{$product->translate( app()->getLocale() )->name}}" class="form-control" id="inputName" required>
                         </div>
 
                         <div class="form-group">
-                            <p class="mg-b-10">@lang('dashboard.small_description_en')</p>
-                            <textarea type="text" name="small_description_en" class="form-control" id="inputName" required>{{$product->small_description_en}}</textarea>
-                        </div>
-                        <div class="form-group">
-                            <p class="mg-b-10">@lang('dashboard.small_description_ar')</p>
-                            <textarea type="text" name="small_description_ar" class="form-control" id="inputName" required>{{$product->small_description_ar}}</textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <p class="mg-b-10">@lang('dashboard.description_en')</p>
-                            <textarea id="summernote" name="desc_en">{{$product->desc_en}}</textarea>
+                            <p class="mg-b-10">@lang('dashboard.' . $locale . '.description')</p>
+                            <textarea id="summernote_{{$locale}}" name="{{$locale}}[description]">{{$product->translate( app()->getLocale() )->description}}</textarea>
                             <script>
-                                $('#summernote').summernote({
+                                $('#summernote_{{$locale}}').summernote({
                                     tabsize: 2,
                                     height: 250
                                 });
                             </script>
                         </div>
 
+                        @endforeach
+
                         <div class="form-group">
-                            <p class="mg-b-10">@lang('dashboard.description_ar')</p>
-                            <textarea id="summernote1" name="desc_ar">{{$product->desc_ar}}</textarea>
-                            <script>
-                                $('#summernote1').summernote({
-                                    tabsize: 2,
-                                    height: 250
-                                });
-                            </script>
+                            <p class="mg-b-10">@lang('dashboard.buy_price')</p>
+                            <input type="number" name="buy_price" value="{{$product->buy_price}}" class="form-control" id="inputName" required>
                         </div>
 
                         <div class="form-group">
-                            <p class="mg-b-10">@lang('dashboard.price')</p>
-                            <input type="number" name="price" value="{{$product->price}}" class="form-control" id="inputName" required>
+                            <p class="mg-b-10">@lang('dashboard.sell_price')</p>
+                            <input type="number" name="sell_price" value="{{$product->sell_price}}" class="form-control" id="inputName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <p class="mg-b-10">@lang('dashboard.stock')</p>
+                            <input type="number" name="stock" value="{{$product->stock}}" class="form-control" id="inputName" required>
                         </div>
 
                         <div class="main-toggle-group-demo mg-t-20 mg-b-10">
@@ -98,6 +90,7 @@
                                 <span></span>
                             </div>
                         </div>
+
                         <div class="mg-b-20 row">
                             <div class="col-sm-12 col-md-4">
                                 <p class="mg-b-10">@lang('dashboard.main-photo')</p>
@@ -129,7 +122,7 @@
                                 <button type="submit" class="btn btn-success">@lang('dashboard.edit')</button>
                             </div>
                         </div>
-                        <input type="hidden" name="active" value="1">
+                        <input type="hidden" name="active" value="{{$product->active}}">
                     </form>
                 </div>
             </div>

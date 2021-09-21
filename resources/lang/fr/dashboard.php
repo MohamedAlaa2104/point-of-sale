@@ -145,13 +145,10 @@ return [
     'success_edit'=>'تم تعديل البيانات بنجاح',
     'success_delete'=>'تم حذف البيانات بنجاح',
 
-    'products_number'=>'عدد المنتجات',
-
     'select_category'=>'اختر قسم',
     'sell_price'=>'سعر البيع',
     'buy_price'=>'سعر الشراء',
     'stock'=>'المخزون',
-    'profit'=>'المكسب',
 
 
 
@@ -165,7 +162,5 @@ return [
         'description'=>'الوصف بالانجليزي',
 
     ]
-
-
 
 ];

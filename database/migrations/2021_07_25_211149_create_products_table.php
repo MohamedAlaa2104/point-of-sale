@@ -18,6 +18,7 @@ class CreateProductsTable extends Migration
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
             $table->integer('sell_price');
             $table->integer('buy_price');
+            $table->integer('stock');
             $table->enum('active', [0,1])->default(1);
             $table->string('slug');
             $table->timestamps();

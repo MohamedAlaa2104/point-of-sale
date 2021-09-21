@@ -1,2 +1,37 @@
 @import "~noty/src/noty.scss";
 @import "~noty/src/themes/mint.scss";
+
+
+.link-icon-edit:link,
+.link-icon-edit:visited{
+  text-decoration: none;
+  background: #2BEE2B;
+  padding: 2px 4px;
+  color: #000;
+  border-radius: 5px;
+  font-size: 1.3rem;
+  text-align: center;
+  display: inline-block;
+  margin: 0 10px;
+}
+.link-icon-edit:hover{
+  transform: scale(1.2);
+  background: #2ad02a;
+}
+
+.link-icon-delete:link,
+.link-icon-delete:visited{
+  text-decoration: none;
+  background: #e91d1d;
+  padding: 2px 4px;
+  color: #fff;
+  border-radius: 5px;
+  font-size: 1.3rem;
+  text-align: center;
+  display: inline-block;
+  margin: 0 10px;
+}
+.link-icon-delete:hover{
+  transform: scale(1.2);
+  background: #D71A1A;
+}
