@@ -11,5 +11,9 @@ class Customer extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
 
-    protected $fillable = ['name_en', 'name_ar'];
+    protected $fillable = ['name', 'phone', 'address'];
+
+    protected $casts = [
+      'phone'=>'array',
+    ];
 }

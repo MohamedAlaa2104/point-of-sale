@@ -44,15 +44,12 @@ class CustomersController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name_en'=>'required|unique:customers,name_en',
-            'name_ar'=>'required|unique:customers,name_ar',
-            'mainImg'=>'required|mimes:jpg,jpeg,png,svg,gif|max:10000',
+            'name'=>'required|unique:customers,name',
+            'phone.1'=>'required',
+            'address'=>'required',
         ]);
 
-        $customer = Customer::create([
-            'name_en'=>$request->name_en,
-            'name_ar'=>$request->name_ar,
-        ]);
+        $customer = Customer::create($request->all());
 
         if ($request->hasFile('mainImg'))
         {
@@ -63,8 +60,9 @@ class CustomersController extends Controller
             $customer->addMedia(public_path($name.'.jpg'))->toMediaCollection('main');
         }
 
+        session()->flash('done', __('dashboard.success_add'));
 
-        return redirect()->route('dashboard.customers.index')->with('success','Your record has been added successfully');
+        return redirect()->route('dashboard.customers.index');
     }
 
 
@@ -89,15 +87,13 @@ class CustomersController extends Controller
     public function update(Request $request, Customer $customer)
     {
         $request->validate([
-            'name_en'=>'required|unique:customers,name_en,'.$customer->id,
-            'name_ar'=>'required|unique:customers,name_ar,'.$customer->id,
-            'mainImg'=>'mimes:jpg,jpeg,png,svg,gif|max:10000',
+            'name'=>'required',
+            'phone'=>'required',
+            'address'=>'required',
+
         ]);
 
-        $customer->update([
-            'name_en'=>$request->name_en,
-            'name_ar'=>$request->name_ar,
-        ]);
+        $customer->update($request->all());
 
         if ($request->hasFile('mainImg'))
         {
@@ -109,7 +105,9 @@ class CustomersController extends Controller
             $customer->addMedia(public_path($name.'.jpg'))->toMediaCollection('main');
         }
 
-        return redirect()->route('dashboard.customers.index')->with('success','Your record has been updated successfully');
+        session()->flash('done', __('dashboard.success_edit'));
+
+        return redirect()->route('dashboard.customers.index');
 
     }
 

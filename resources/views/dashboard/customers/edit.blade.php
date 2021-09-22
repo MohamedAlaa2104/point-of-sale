@@ -33,26 +33,30 @@
                     </div>
                     <form method="POST" action="{{route('dashboard.customers.update', $customer->id)}}" class="form-horizontal" enctype="multipart/form-data" >
                         @csrf
+
                         @method('PUT')
+
                         <div class="form-group">
-                            <p class="mg-b-10">@lang('dashboard.name_en')</p>
-                            <input type="text" name="name_en" value="{{$customer->name_en}}" class="form-control" id="inputName" required>
+                            <p class="mg-b-10">@lang('dashboard.name')</p>
+                            <input type="text" name="name" value="{{$customer->name}}" class="form-control" id="inputName" required>
                         </div>
+
                         <div class="form-group">
-                            <p class="mg-b-10">@lang('dashboard.name_ar')</p>
-                            <input type="text" name="name_ar" value="{{$customer->name_ar}}" class="form-control" id="inputName" required>
+                            <p class="mg-b-10">@lang('dashboard.phone')</p>
+                            <input type="text" name="phone[]" value="{{$customer->phone[0]}}" class="form-control" id="inputName" required>
                         </div>
-                        <div class="mg-b-20">
-                            <p class="mg-b-10">@lang('dashboard.main-photo')</p>
-                            <div class="row">
-                                <div class="col-sm-12 col-md-4">
-                                    <input type="file" name="mainImg" class="dropify" data-height="200" />
-                                </div>
-                                <div class="col-lg-4">
-                                    <img src="{{$customer->getFirstMediaUrl('main')}}" alt="{{$customer->name_en}}">
-                                </div>
-                            </div>
+
+                        <div class="form-group">
+                            <p class="mg-b-10">@lang('dashboard.phone')</p>
+                            <input type="text" name="phone[]" value="{{$customer->phone[1]}}" class="form-control" id="inputName" required>
                         </div>
+
+                        <div class="form-group">
+                            <p class="mg-b-10">@lang('dashboard.address')</p>
+                            <input type="text" name="address" value="{{$customer->address}}" class="form-control" id="inputName" required>
+                        </div>
+
+
                         <div class="form-group mb-0 mt-3 justify-content-end">
                             <div>
                                 <button type="submit" class="btn btn-success">@lang('dashboard.edit')</button>

@@ -116,29 +116,6 @@
 						</ul>
 					</li>
 					@endcan
-					<li class="slide">
-						<a class="side-menu__item" data-toggle="slide" href="{{ url('/' . $page='#') }}">
-							<i class="mg-x-10 far fa-handshake"></i>
-							<span class="side-menu__label">@lang('dashboard.contracts')</span><i class="angle fe fe-chevron-down"></i></a>
-						<ul class="slide-menu">
-							<li><a class="slide-item" href="{{ route('dashboard.contract-documents.index') }}">@lang('dashboard.show')</a></li>
-							<li><a class="slide-item" href="{{ route('dashboard.contract-documents.create') }}">@lang('dashboard.create')</a></li>
-
-						</ul>
-					</li>
-					@can('read articles')
-					<li class="slide">
-						<a class="side-menu__item" data-toggle="slide" href="{{ url('/' . $page='#') }}">
-							<i class="mg-x-10 fa fa-book"></i>
-							<span class="side-menu__label">@lang('dashboard.articles')</span><i class="angle fe fe-chevron-down"></i></a>
-						<ul class="slide-menu">
-							<li><a class="slide-item" href="{{ route('dashboard.articles.index') }}">@lang('dashboard.show')</a></li>
-							@can('create articles')
-								<li><a class="slide-item" href="{{ route('dashboard.articles.create') }}">@lang('dashboard.create')</a></li>
-							@endcan
-						</ul>
-					</li>
-					@endcan
 					@can('read customers')
 					<li class="slide">
 						<a class="side-menu__item" data-toggle="slide" href="{{ url('/' . $page='#') }}">
@@ -152,45 +129,6 @@
 						</ul>
 					</li>
 					@endcan
-
-					@can('read gallery')
-					<li class="slide">
-						<a class="side-menu__item" data-toggle="slide" href="{{ url('/' . $page='#') }}">
-							<i class="mg-x-10 fa fa-image"></i>
-							<span class="side-menu__label">@lang('dashboard.gallery')</span><i class="angle fe fe-chevron-down"></i></a>
-						<ul class="slide-menu">
-							<li><a class="slide-item" href="{{ route('dashboard.gallery.index') }}">@lang('dashboard.show')</a></li>
-							@can('create gallery')
-							<li><a class="slide-item" href="{{ route('dashboard.gallery.create') }}">@lang('dashboard.create')</a></li>
-							@endcan
-						</ul>
-					</li>
-					@endcan
-
-					@can('read jobs')
-					<li class="slide">
-						<a class="side-menu__item" data-toggle="slide" href="{{ url('/' . $page='#') }}">
-							<i class="mg-x-10 fa fa-suitcase"></i>
-							<span class="side-menu__label">@lang('dashboard.jobs')</span><i class="angle fe fe-chevron-down"></i></a>
-						<ul class="slide-menu">
-							<li><a class="slide-item" href="{{ route('dashboard.jobs.index') }}">@lang('dashboard.show')</a></li>
-							@can('create jobs')
-							<li><a class="slide-item" href="{{ route('dashboard.jobs.create') }}">@lang('dashboard.create')</a></li>
-							@endcan
-						</ul>
-					</li>
-					@endcan
-
-                    @can('read contactus')
-                    <li class="slide">
-                        <a class="side-menu__item" data-toggle="slide" href="{{ url('/' . $page='#') }}">
-						<i class="mg-x-10 fa fa-envelope"></i>
-						<span class="side-menu__label">@lang('dashboard.contact_us')</span><i class="angle fe fe-chevron-down"></i></a>
-                        <ul class="slide-menu">
-                            <li><a class="slide-item" href="{{ route('dashboard.contactus.index') }}">@lang('dashboard.show')</a></li>
-                        </ul>
-                    </li>
-                    @endcan
 
 					@can('settings')
 					<li class="side-item side-item-category">@lang('dashboard.settings')</li>
