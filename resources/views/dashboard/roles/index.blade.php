@@ -55,10 +55,12 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <form id="delete-form-{{$row->id}}" action="{{route('dashboard.roles.destroy', $row->id)}}" method="POST">
                                         @method('DELETE')
                                         @csrf
                                     </form>
+
                                 </div>
 
                             </tr>

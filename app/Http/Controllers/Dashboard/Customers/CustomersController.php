@@ -13,9 +13,13 @@ class CustomersController extends Controller
     public function __construct()
     {
         $this->middleware(['hasAnyPermission']);
+
         $this->middleware(['can:read customers'])->only(['index','customersTable']);
+
         $this->middleware(['can:create customers'])->only(['store']);
+
         $this->middleware(['can:edit customers'])->only(['update']);
+
         $this->middleware(['can:delete customers'])->only(['destroy']);
     }
     public function index()
@@ -120,17 +124,30 @@ class CustomersController extends Controller
     public function destroy(Customer $customer)
     {
         $customer->clearMediaCollection();
+
         $customer->delete();
-        return redirect()->route('dashboard.customers.index')->with('success','Your record has been deleted successfully');
+
+        session()->flash('done', __('dashboard.success_delete'));
+
+        return redirect()->route('dashboard.customers.index');
     }
 
     public function customersTable()
     {
         return Datatables::eloquent(Customer::query())
             ->addColumn('action', function ($row){
+
                 return view('dashboard.customers.customers-datatable', compact('row'));
             })
+
+            ->addColumn('add_order', function ($row){
+                return '<a href="'. route('dashboard.order.create', ['customer_id'=>$row->id]) .'" class="btn btn-outline-info btn-sm">'. trans('dashboard.add_order') .'</a>';
+            })
+
             ->addIndexColumn()
+
+            ->rawColumns(['add_order'])
+
             ->toJson();
     }
 }

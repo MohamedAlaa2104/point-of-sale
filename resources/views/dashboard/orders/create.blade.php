@@ -23,21 +23,28 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table text-md-nowrap" id="products-table">
-                            <thead>
-                            <tr>
-                                <th class="wd-5p border-bottom-0"> # </th>
-                                <th class="wd-15p border-bottom-0"> @lang('dashboard.name') </th>
-                                <th class="wd-15p border-bottom-0">@lang('dashboard.email')</th>
-                                <th class="wd-15p border-bottom-0">@lang('dashboard.product')</th>
-                                <th class="wd-15p border-bottom-0">@lang('dashboard.category')</th>
-                                <th class="wd-15p border-bottom-0">@lang('dashboard.paid')</th>
-                                <th class="wd-10p border-bottom-0">@lang('dashboard.action')</th>
-                            </tr>
-                            </thead>
-                        </table>
+
+                    <div class="row">
+                        <div class="col col-sm-6">
+                            
+                        </div>
+                        <div class="col col-sm-6"></div>
                     </div>
+{{--                    <div class="table-responsive">--}}
+{{--                        <table class="table text-md-nowrap" id="products-table">--}}
+{{--                            <thead>--}}
+{{--                            <tr>--}}
+{{--                                <th class="wd-5p border-bottom-0"> # </th>--}}
+{{--                                <th class="wd-15p border-bottom-0"> @lang('dashboard.name') </th>--}}
+{{--                                <th class="wd-15p border-bottom-0">@lang('dashboard.email')</th>--}}
+{{--                                <th class="wd-15p border-bottom-0">@lang('dashboard.product')</th>--}}
+{{--                                <th class="wd-15p border-bottom-0">@lang('dashboard.category')</th>--}}
+{{--                                <th class="wd-15p border-bottom-0">@lang('dashboard.paid')</th>--}}
+{{--                                <th class="wd-10p border-bottom-0">@lang('dashboard.action')</th>--}}
+{{--                            </tr>--}}
+{{--                            </thead>--}}
+{{--                        </table>--}}
+{{--                    </div>--}}
                 </div>
             </div>
         </div>

@@ -15,8 +15,6 @@
 @section('content')
     <!-- row -->
     <div class="row">
-        @include('dashboard.partials.alerts')
-        @include('dashboard.partials.errors')
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-header pb-0">
@@ -33,6 +31,7 @@
                                 <th class="wd-15p border-bottom-0"> @lang('dashboard.name') </th>
                                 <th class="wd-15p border-bottom-0"> @lang('dashboard.phone') </th>
                                 <th class="wd-15p border-bottom-0"> @lang('dashboard.address') </th>
+                                <th class="wd-15p border-bottom-0"> @lang('dashboard.add_order') </th>
                                 <th class="wd-10p border-bottom-0">@lang('dashboard.action')</th>
                             </tr>
                             </thead>
@@ -89,6 +88,7 @@
                 {data: 'name', name:'name'},
                 {data: 'phone', name:'phone'},
                 {data: 'address', name:'address'},
+                {data: 'add_order', name:'add_order'},
                 {data: 'action', name:'action'},
             ]
         });

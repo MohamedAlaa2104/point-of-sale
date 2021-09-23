@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard\Orders;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use DataTables;
@@ -35,6 +36,11 @@ class OrdersController extends Controller
     public function show(Order $order)
     {
         return view('dashboard.orders.show', compact('order'));
+    }
+
+    public function create()
+    {
+        return view('dashboard.orders.create');
     }
 
 

@@ -25,12 +25,12 @@
                                     <div class="mb-5 d-flex"> <a href="{{ url('/' . $page='') }}"><img src="{{URL::asset('imgs/logo.png')}}" class="sign-favicon ht-40" alt="logo"></a><h1 class="main-logo1 ml-1 mr-0 my-auto tx-28"></h1></div>
                                     <div class="card-sigin">
                                         <div class="main-signup-header">
-                                            <h2>@lang('main.login')</h2>
+                                            <h2>@lang('dashboard.login')</h2>
                                             <h5 class="font-weight-semibold mb-4"></h5>
                                             <form method="POST" action="{{ route('login') }}">
                                                 @csrf
                                                 <div class="form-group">
-                                                    <label>@lang('main.email_address')</label>
+                                                    <label>@lang('dashboard.email')</label>
                                                     <input class="form-control"  type="email"  name="email" value="{{ old('email') }}" required autofocus>
                                                     @error('email')
                                                     <span  role="alert">
@@ -39,7 +39,7 @@
                                                     @enderror
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>@lang('main.password')</label>
+                                                    <label>@lang('dashboard.password')</label>
                                                     <input class="form-control"  name="password" type="password">
                                                     @error('password')
                                                     <span class="invalid-feedback" role="alert">
@@ -53,12 +53,12 @@
                                                             <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
                                                             <label class="form-check-label" style="{{app()->getLocale() == 'ar' ? 'margin: 0 20px' : ''}}"  for="remember">
-                                                                @lang('main.remember_me')
+                                                                @lang('dashboard.remember_me')
                                                             </label>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <button type="submit" class="btn btn-main-primary btn-block">@lang('main.login')</button>
+                                                <button type="submit" class="btn btn-main-primary btn-block">@lang('dashboard.login')</button>
 {{--                                                <div class="row row-xs">--}}
 {{--                                                    <div class="col-sm-6">--}}
 {{--                                                        <button class="btn btn-block"><i class="fab fa-facebook-f"></i> Signup with Facebook</button>--}}

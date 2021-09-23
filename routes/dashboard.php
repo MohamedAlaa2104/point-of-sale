@@ -109,6 +109,7 @@ Route::get('articles-table' , [ArticlesController::class , 'articlesTable'])->na
 
 /***************************************************  Routes For Customers  ***************************************************/
 
+Route::resource('customers/order', OrdersController::class);
 Route::resource('customers' , CustomersController::class);
 Route::get('customers-table' , [CustomersController::class , 'customersTable'])->name('customers-table');
 
