@@ -48,7 +48,7 @@
 
                         <div class="form-group">
                             <p class="mg-b-10">@lang('dashboard.phone')</p>
-                            <input type="text" name="phone[]" value="{{$customer->phone[1]}}" class="form-control" id="inputName" required>
+                            <input type="text" name="phone[]" value="{{$customer->phone[1]}}" class="form-control" id="inputName">
                         </div>
 
                         <div class="form-group">
