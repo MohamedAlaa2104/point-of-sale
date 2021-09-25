@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\CategoryCreated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;

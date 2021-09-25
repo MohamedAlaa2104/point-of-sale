@@ -143,6 +143,12 @@ return [
     'login'=>'تسجيل الدخول',
     'remember_me'=>'تذكرني',
 
+    'notifications'=>'الأشعارات',
+    'have_notifications'=>'لديك :num اشعارات غير مقروءة',
+    'mark_all_read'=>'تحديد الكل كمقروء',
+    'new_category_notification'=>'قام :userName بأضافة قسم جديد بأسم :categoryName',
+    'no_notifications'=>'لا يوجد اشعارات',
+
     'success_add'=>'تم اضافة البيانات بنجاح',
     'success_edit'=>'تم تعديل البيانات بنجاح',
     'success_delete'=>'تم حذف البيانات بنجاح',

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard\CategoryController;
 
+use App\Events\CategoryCreated;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -47,14 +48,16 @@ class CategoryController extends Controller
         ]);
         $request['slug'] = str_replace(' ', '-', $request->en['name']);
 
-        $agency =  Category::create($request->all());
+        $category =  Category::create($request->all());
+
+        CategoryCreated::dispatch(auth()->user(), $category);
 
         if ($request->hasFile('mainImg'))
         {
             $name = rand(1000000,9999999);
             $img = Image::make($request->file('mainImg'))->resize(640,480);
             $img->save($name.'.jpg');
-            $agency->addMedia(public_path($name.'.jpg'))->toMediaCollection('main');
+            $category->addMedia(public_path($name.'.jpg'))->toMediaCollection('main');
         }
 
         session()->flash('done', trans('dashboard.success_add'));
