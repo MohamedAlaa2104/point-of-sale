@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Dashboard\Orders;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use DataTables;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -40,7 +42,8 @@ class OrdersController extends Controller
 
     public function create()
     {
-        return view('dashboard.orders.create');
+        $categories = Category::get();
+        return view('dashboard.orders.create', compact('categories'));
     }
 
 
@@ -58,7 +61,7 @@ class OrdersController extends Controller
 
     public function ordersTable()
     {
-        return DataTables::eloquent(Order::with('contract', 'product')->orderBy('id', 'desc'))
+        return DataTables::eloquent(Order::with('product')->orderBy('id', 'desc'))
             ->addColumn('action', function($row) {
                 return view('dashboard.orders.action')->with('row', $row);
             })
@@ -77,6 +80,19 @@ class OrdersController extends Controller
                 }
                 return $row->Contract->Payments()->sum('amount');
             })
+            ->addIndexColumn()
+            ->toJson();
+    }
+
+    public function productsTable()
+    {
+        return DataTables::eloquent(Product::with('translation')->when(request()->category_id, function ($q) {
+            return $q->where('category_id',request()->category_id );
+        }))
+            ->addColumn('button', function ($row){
+                return '<a id="btn-'.$row->id.'" class="add-product btn btn-success btn-sm" data-id="' .$row->id. '" data-name="'.$row->translate( app()->getLocale() )->name.'" data-price="'.$row->sell_price.'"><i class="fa fa-plus"></i></a>';
+            })
+            ->rawColumns(['button'])
             ->addIndexColumn()
             ->toJson();
     }

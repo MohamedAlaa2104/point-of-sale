@@ -14,42 +14,74 @@
 @section('content')
     <!-- row opened -->
     <div class="row row-sm">
-        <div class="col-xl-12">
+        <div class="col-xl-6">
             <div class="card">
-                <div class="card-header pb-0">
+                <div class="card-header pb-4 border-bottom ">
                     <div class="d-flex justify-content-between">
                         <h4 class="card-title mg-b-0">@lang('dashboard.orders')</h4>
-                        <i class="mdi mdi-dots-horizontal text-gray"></i>
                     </div>
                 </div>
                 <div class="card-body">
 
-                    <div class="row">
-                        <div class="col col-sm-6">
-                            
-                        </div>
-                        <div class="col col-sm-6"></div>
+                    <div class=" mg-b-15">
+                        <p class="mg-b-10">@lang('dashboard.category')</p>
+                        <select id="category" class="form-control" >
+                            <option value="">@lang('dashboard.select_category')</option>
+                            @foreach($categories as $category)
+                                <option data-id="{{$category->id}}">
+                                    {{$category->translate(app()->getLocale())->name}}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
-{{--                    <div class="table-responsive">--}}
-{{--                        <table class="table text-md-nowrap" id="products-table">--}}
-{{--                            <thead>--}}
-{{--                            <tr>--}}
-{{--                                <th class="wd-5p border-bottom-0"> # </th>--}}
-{{--                                <th class="wd-15p border-bottom-0"> @lang('dashboard.name') </th>--}}
-{{--                                <th class="wd-15p border-bottom-0">@lang('dashboard.email')</th>--}}
-{{--                                <th class="wd-15p border-bottom-0">@lang('dashboard.product')</th>--}}
-{{--                                <th class="wd-15p border-bottom-0">@lang('dashboard.category')</th>--}}
-{{--                                <th class="wd-15p border-bottom-0">@lang('dashboard.paid')</th>--}}
-{{--                                <th class="wd-10p border-bottom-0">@lang('dashboard.action')</th>--}}
-{{--                            </tr>--}}
-{{--                            </thead>--}}
-{{--                        </table>--}}
-{{--                    </div>--}}
+
+                    <div class="table-responsive mt-5">
+                        <table class="table text-md-nowrap" id="products-table">
+                            <thead>
+                            <tr>
+                                <th class="wd-5p border-bottom-0"> # </th>
+                                <th class="wd-15p border-bottom-0"> @lang('dashboard.name') </th>
+                                <th class="wd-15p border-bottom-0">@lang('dashboard.sell_price')</th>
+                                <th class="wd-15p border-bottom-0">@lang('dashboard.stock')</th>
+                                <th class="wd-15p border-bottom-0">@lang('dashboard.action')</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
         <!--/div-->
 
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-header pb-4 border-bottom ">
+                    <div class="d-flex justify-content-between">
+                        <h4 class="card-title mg-b-0">@lang('dashboard.invoice')</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table text-md-nowrap" id="example1">
+                            <thead>
+                            <tr>
+                                <th class="wd-15p border-bottom-0"> @lang('dashboard.name') </th>
+                                <th class="wd-15p border-bottom-0">@lang('dashboard.number')</th>
+                                <th class="wd-10p border-bottom-0">@lang('dashboard.price')</th>
+                                <th class="wd-10p border-bottom-0">@lang('dashboard.action')</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr></tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--/div-->
     </div>
     <!-- /row -->
     </div>
@@ -84,6 +116,7 @@
     <script src="{{URL::asset('assets/plugins/sweet-alert/sweetalert.min.js')}}"></script>
     <script src="{{URL::asset('assets/js/sweet-alert.js')}}"></script>
     <script>
+
         $('#products-table').DataTable({
             language: {
                 searchPlaceholder: 'Search...',
@@ -92,63 +125,65 @@
             },
             processing:true,
             serverside:true,
-            ajax: '{!! route('dashboard.orders-table') !!}',
+            ajax: '{!! route('dashboard.orders.products-table') !!}',
             columns: [
                 {data: 'DT_RowIndex', name:'DT_RowIndex'},
-                {data: 'name', name:'name'},
-                {data: 'email', name:'email'},
-                {data: 'product', name:'product'},
-                {data: 'category', name:'category'},
-                {data: 'price', name:'price'},
-                {data: 'action', name:'action'},
+                {data: 'translation.name', name:'translation.name'},
+                {data: 'sell_price', name:'sell_price'},
+                {data: 'stock', name:'stock'},
+                {data: 'button', name:'button'},
             ]
         });
     </script>
+    <script>
+        $(document).ready(function (){
+           $('#category').on('change', function (){
+               var cat_id = $('#category option:selected').data('id');
+               var table = $('#products-table');
 
-{{--    <script>--}}
-{{--        function clickedButton(e) {--}}
-{{--            var data = {--}}
-{{--                "_token": "{{ csrf_token() }}",--}}
-{{--                "id": e.attr('switch-id'),--}}
-{{--                "type":e.attr('switch-type')--}}
-{{--            }--}}
-{{--            $.post( "{{ route('dashboard.ajax-buttons') }}", data)--}}
-{{--                .done(function( data ) {--}}
-{{--                    if (e.attr('switch-type') == 'active'){--}}
-{{--                        if (data.active){--}}
-{{--                            e.addClass('on');--}}
-{{--                        }--}}
-{{--                        if (data.active == 0){--}}
-{{--                            e.removeClass('on');--}}
-{{--                        }--}}
-{{--                    }--}}
+               table.DataTable().clear().destroy();
 
-{{--                    if (e.attr('switch-type') == 'featured'){--}}
-{{--                        if (data.featured){--}}
-{{--                            e.addClass('on');--}}
-{{--                        }--}}
-{{--                        if (data.featured == 0){--}}
-{{--                            e.removeClass('on');--}}
-{{--                        }--}}
-{{--                    }--}}
+               table.DataTable({
+                    language: {
+                        searchPlaceholder: 'Search...',
+                        sSearch: '',
+                        lengthMenu: '_MENU_',
+                    },
+                    processing:true,
+                    serverside:true,
+                    ajax: '{!! route('dashboard.orders.products-table') !!}?category_id=' + cat_id,
+                    columns: [
+                        {data: 'DT_RowIndex', name:'DT_RowIndex'},
+                        {data: 'translation.name', name:'translation.name'},
+                        {data: 'sell_price', name:'sell_price'},
+                        {data: 'stock', name:'stock'},
+                        {data: 'button', name:'button'},
+                    ]
+                });
+           });
 
-{{--                    swal({--}}
-{{--                        title: "{{__('dashboard.done')}}",--}}
-{{--                        text: "{{__('dashboard.your-request-has-been-applied')}}",--}}
-{{--                        icon: "success",--}}
-{{--                    });--}}
-{{--                });--}}
+            $('#products-table').on('click', 'a', function(){
+               var id = $(this).data('id');
+               var name = $(this).data('name');
+               var price = $(this).data('price');
 
-{{--        }--}}
-{{--    </script>--}}
-
-    @if ($success = session()->get('success'))
-        <script>
-            swal({
-                title: "{{__('dashboard.done')}}",
-                text: "{{__('dashboard.your-request-has-been-applied')}}",
-                icon: "success",
+               html =   `<tr>
+                            <td>${name}</td>
+                            <td>
+                                 <div class="form-group">
+                                    <input type="number"  min="1" value="1" class="form-control">
+                                </div>
+                            </td>
+                            <td>${price}</td>
+                            <td><button class="btn btn-danger btn-sm delete-product"><i class="las la-trash-alt"></i></button></td>
+                        </tr>`;
+               $('#example1 tbody').append(html);
             });
-        </script>
-    @endif
+
+            $('#example1').on('click', '.delete-product', function(){
+                $(this).closest('tr').remove();
+            });
+        });
+
+    </script>
 @endsection

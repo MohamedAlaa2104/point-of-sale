@@ -78,9 +78,9 @@ Route::resource('contactus' , ContactUsController::class)->only(['index' , 'show
 Route::get('contactus-table' , [ContactUsController::class , 'contactUsTable'])->name('contactus-table');
 
 /***************************************************  Routes For Orders  ***************************************************/
-
-Route::resource('orders' , OrdersController::class);
+Route::get('orders-products-table' , [OrdersController::class , 'productsTable'])->name('orders.products-table');
 Route::get('orders-table' , [OrdersController::class , 'ordersTable'])->name('orders-table');
+Route::resource('orders' , OrdersController::class);
 
 /***************************************************  Routes For Payments  ***************************************************/
 
