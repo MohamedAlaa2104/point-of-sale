@@ -26,7 +26,7 @@
                     <div class=" mg-b-15">
                         <p class="mg-b-10">@lang('dashboard.category')</p>
                         <select id="category" class="form-control" >
-                            <option value="">@lang('dashboard.select_category')</option>
+                            <option value="" selected>@lang('dashboard.select_category')</option>
                             @foreach($categories as $category)
                                 <option data-id="{{$category->id}}">
                                     {{$category->translate(app()->getLocale())->name}}
@@ -78,7 +78,13 @@
                         </table>
                     </div>
 
+                    <div class="row">
+                        <div class="col-sm-6">السعر الكلي</div>
+                        <div class="col-sm-6" id="total-price" data-totalprice="0">0</div>
+                    </div>
+
                 </div>
+
             </div>
         </div>
         <!--/div-->
@@ -162,28 +168,70 @@
                 });
            });
 
-            $('#products-table').on('click', 'a', function(){
+            $('#products-table').on('click', 'a', function(btn){
                var id = $(this).data('id');
                var name = $(this).data('name');
                var price = $(this).data('price');
 
-               html =   `<tr>
+               html =   `<tr class="products-row" data-id="${id}" data-price="${price}" data-total="${price}">
                             <td>${name}</td>
                             <td>
                                  <div class="form-group">
-                                    <input type="number"  min="1" value="1" class="form-control">
+                                    <input type="number" name="amount"  min="1" value="1" class="form-control product-amount">
                                 </div>
                             </td>
-                            <td>${price}</td>
+                            <td id="product-${id}-price">${price}</td>
                             <td><button class="btn btn-danger btn-sm delete-product"><i class="las la-trash-alt"></i></button></td>
                         </tr>`;
-               $('#example1 tbody').append(html);
+               if (!checkRowExists(id)){
+
+                   $('#example1 tbody').append(html);
+
+               }
+               $(this).css('display', 'none');
+               calculateTotal();
+
             });
 
             $('#example1').on('click', '.delete-product', function(){
+                var id = $(this).closest('tr').data('id');
+                var price = $(this).closest('tr').data('price');
+                var amount = $('input[name="product-'+ id + '"]').val();
+                $('#btn-' + id).css('display', 'inline-block');
                 $(this).closest('tr').remove();
+                calculateTotal();
+            });
+
+            $('body').on('change', '.product-amount', function (){
+                calculateTotal();
             });
         });
+
+        function calculateTotal(){
+            var totalPrice =0;
+            $('.products-row').each(function (){
+                var id = $(this).data('id');
+                var amount = parseInt($(this).find('[name="amount"]').val());
+                var price = parseInt($(this).data('price'));
+                 totalPrice += amount*price;
+                 $('#product-'+id+'-price').html(amount*price);
+            });
+            $('#total-price').html(totalPrice);
+        }
+
+        function checkRowExists(newId){
+            var value = 0;
+            $('.products-row').each(function (){
+                var id = $(this).data('id');
+                console.log(newId + ' ' + id);
+                if (parseInt(newId) === parseInt(id)){
+
+                    console.log(value);
+                    return value = 1;
+                }
+            });
+            return value;
+        }
 
     </script>
 @endsection
