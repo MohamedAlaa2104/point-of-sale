@@ -44,7 +44,6 @@ class CategoryController extends Controller
         $request->validate([
             'en.name'=>'required|unique:category_translations,name',
             'ar.name'=>'required',
-            'mainImg'=>'required|mimes:jpg,png,jpeg,svg,gif|max:10000',
         ]);
         $request['slug'] = str_replace(' ', '-', $request->en['name']);
 

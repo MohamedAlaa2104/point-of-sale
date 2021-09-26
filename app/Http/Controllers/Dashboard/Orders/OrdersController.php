@@ -46,6 +46,29 @@ class OrdersController extends Controller
         return view('dashboard.orders.create', compact('categories'));
     }
 
+    public function store(Request $request)
+    {
+        $customer = Customer::findOrFail( $request->customer_id );
+
+        $order = $customer->Orders()->create();
+
+        $total_price = 0;
+
+        foreach ($request->products as $index=>$product) {
+
+            $product = Product::findOrFail($product);
+
+            $order->Products()->attach($product, ['amount'=>$request->amount[$index], 'price'=>$product->sell_price]);
+
+            $total_price += ($product->sell_price * $request->amount[$index]);
+
+            $product->update(['stock'=>$product->stock - $request->amount[$index]]);
+
+        }
+
+        $order->update(['total_price'=>$total_price]);
+    }
+
 
     /**
      * Remove the specified resource from storage.

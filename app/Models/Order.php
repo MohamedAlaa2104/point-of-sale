@@ -9,15 +9,15 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['first_name', 'last_name', 'type', 'payment_type', 'state', 'city', 'street', 'post_code', 'company_name', 'commercial_register', 'tax_number',  'phone', 'status', 'product_id', 'inquiry', 'email', 'result_code', 'result_description', 'total_price', 'renting_duration'];
+    protected $fillable = ['customer_id', 'total_price'];
 
-    public function Product()
+    public function Client()
     {
-        return $this->belongsTo(Product::class, 'product_id');
+        return $this->belongsTo(Customer::class);
+    }
+    public function Products()
+    {
+        return $this->belongsToMany(Product::class, 'product_order');
     }
 
-    public function Contract()
-    {
-        return $this->hasOne(Contract::class);
-    }
 }

@@ -61,27 +61,38 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table text-md-nowrap" id="example1">
-                            <thead>
-                            <tr>
-                                <th class="wd-15p border-bottom-0"> @lang('dashboard.name') </th>
-                                <th class="wd-15p border-bottom-0">@lang('dashboard.number')</th>
-                                <th class="wd-10p border-bottom-0">@lang('dashboard.price')</th>
-                                <th class="wd-10p border-bottom-0">@lang('dashboard.action')</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <tr></tr>
+                    <form action="{{ route('dashboard.order.store', ['customer_id'=>request()->customer_id] ) }}" method="POST">
 
-                            </tbody>
-                        </table>
-                    </div>
+                        @csrf
 
-                    <div class="row">
-                        <div class="col-sm-6">السعر الكلي</div>
-                        <div class="col-sm-6" id="total-price" data-totalprice="0">0</div>
-                    </div>
+                        <div class="table-responsive">
+                            <table class="table text-md-nowrap" id="example1">
+                                <thead>
+                                <tr>
+                                    <th class="wd-15p border-bottom-0"> @lang('dashboard.name') </th>
+                                    <th class="wd-15p border-bottom-0">@lang('dashboard.number')</th>
+                                    <th class="wd-10p border-bottom-0">@lang('dashboard.price')</th>
+                                    <th class="wd-10p border-bottom-0">@lang('dashboard.action')</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    <tr></tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">السعر الكلي</div>
+                            <div class="col-sm-6" id="total-price" data-totalprice="0">0</div>
+                            <div class="col-sm-12">
+                                <button id="form-btn" class="btn btn-success btn d-none mt-5">@lang('dashboard.confirm')</button>
+                            </div>
+                        </div>
+                    </form>
+
 
                 </div>
 
@@ -174,10 +185,11 @@
                var price = $(this).data('price');
 
                html =   `<tr class="products-row" data-id="${id}" data-price="${price}" data-total="${price}">
+                            <input type="hidden" name="products[]" value="${id}">
                             <td>${name}</td>
                             <td>
                                  <div class="form-group">
-                                    <input type="number" name="amount"  min="1" value="1" class="form-control product-amount">
+                                    <input type="number" name="amount[]"  min="1" value="1" class="form-control product-amount">
                                 </div>
                             </td>
                             <td id="product-${id}-price">${price}</td>
@@ -211,12 +223,15 @@
             var totalPrice =0;
             $('.products-row').each(function (){
                 var id = $(this).data('id');
-                var amount = parseInt($(this).find('[name="amount"]').val());
+                var amount = parseInt($(this).find('.product-amount').val());
                 var price = parseInt($(this).data('price'));
                  totalPrice += amount*price;
                  $('#product-'+id+'-price').html(amount*price);
             });
             $('#total-price').html(totalPrice);
+            if (totalPrice > 0){
+                $('#form-btn').removeClass('d-none');
+            }
         }
 
         function checkRowExists(newId){

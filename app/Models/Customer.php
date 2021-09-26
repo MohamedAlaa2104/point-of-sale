@@ -16,4 +16,9 @@ class Customer extends Model implements HasMedia
     protected $casts = [
       'phone'=>'array',
     ];
+
+    public function Orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

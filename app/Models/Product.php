@@ -37,6 +37,6 @@ class Product extends Model implements HasMedia, TranslatableContract
 
     public function Orders()
     {
-        return $this->hasMany(Order::class);
+        return $this->belongsToMany(Order::class, 'product_order');
     }
 }

@@ -43,17 +43,6 @@
                         </div>
                         @endforeach
 
-                        <div class="mg-b-20">
-                            <p class="mg-b-10">@lang('dashboard.main-photo')</p>
-                            <div class="row">
-                                <div class="col-sm-12 col-md-4">
-                                    <input type="file" name="mainImg" class="dropify" data-height="200" />
-                                </div>
-                                <div class="col-lg-4">
-                                    <img src="{{$category->getFirstMediaUrl('main')}}" alt="{{$category->name_en}}">
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="form-group mb-0 mt-3 justify-content-end">
                             <div>
