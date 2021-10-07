@@ -231,6 +231,9 @@
             $('#total-price').html(totalPrice);
             if (totalPrice > 0){
                 $('#form-btn').removeClass('d-none');
+            }else {
+                let btn = document.querySelector('#form-btn');
+                btn.classList.add('d-none');
             }
         }
 
@@ -238,10 +241,7 @@
             var value = 0;
             $('.products-row').each(function (){
                 var id = $(this).data('id');
-                console.log(newId + ' ' + id);
                 if (parseInt(newId) === parseInt(id)){
-
-                    console.log(value);
                     return value = 1;
                 }
             });

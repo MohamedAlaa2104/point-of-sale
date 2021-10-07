@@ -67,6 +67,10 @@ class OrdersController extends Controller
         }
 
         $order->update(['total_price'=>$total_price]);
+
+        session()->flash('done', trans('dashboard.success_add'));
+
+        return redirect()->route('dashboard.order.index');
     }
 
 
@@ -84,24 +88,9 @@ class OrdersController extends Controller
 
     public function ordersTable()
     {
-        return DataTables::eloquent(Order::with('product')->orderBy('id', 'desc'))
+        return DataTables::eloquent(Order::with('products', 'Client')->orderBy('id', 'desc'))
             ->addColumn('action', function($row) {
                 return view('dashboard.orders.action')->with('row', $row);
-            })
-            ->addColumn('product', function($row) {
-                return $row->Product['name_'.LaravelLocalization::getCurrentLocale()];
-            })
-            ->addColumn('category', function($row) {
-                return $row->Product->Category['name_'.LaravelLocalization::getCurrentLocale()];
-            })
-            ->addColumn('name', function($row) {
-                return $row->first_name . ' ' . $row->last_name;
-            })
-            ->addColumn('price', function($row) {
-                if ($row->Contract()->count() == 0) {
-                    return 0;
-                }
-                return $row->Contract->Payments()->sum('amount');
             })
             ->addIndexColumn()
             ->toJson();

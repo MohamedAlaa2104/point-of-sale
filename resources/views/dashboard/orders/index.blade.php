@@ -29,10 +29,7 @@
                             <tr>
                                 <th class="wd-5p border-bottom-0"> # </th>
                                 <th class="wd-15p border-bottom-0"> @lang('dashboard.name') </th>
-                                <th class="wd-15p border-bottom-0">@lang('dashboard.email')</th>
-                                <th class="wd-15p border-bottom-0">@lang('dashboard.product')</th>
-                                <th class="wd-15p border-bottom-0">@lang('dashboard.category')</th>
-                                <th class="wd-15p border-bottom-0">@lang('dashboard.paid')</th>
+                                <th class="wd-15p border-bottom-0">@lang('dashboard.price')</th>
                                 <th class="wd-10p border-bottom-0">@lang('dashboard.action')</th>
                             </tr>
                             </thead>
@@ -88,11 +85,8 @@
             ajax: '{!! route('dashboard.orders-table') !!}',
             columns: [
                 {data: 'DT_RowIndex', name:'DT_RowIndex'},
-                {data: 'name', name:'name'},
-                {data: 'email', name:'email'},
-                {data: 'product', name:'product'},
-                {data: 'category', name:'category'},
-                {data: 'price', name:'price'},
+                {data: 'client.name', name:'client.name'},
+                {data: 'total_price', name:'total_price'},
                 {data: 'action', name:'action'},
             ]
         });
